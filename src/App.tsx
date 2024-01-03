@@ -6,6 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "routes/Routes";
 import store from "redux/store";
 
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 function App() {
   return (
     <div className="App">

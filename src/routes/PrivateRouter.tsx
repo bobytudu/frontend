@@ -5,6 +5,7 @@ import generalRoutes from "./generalRoutes";
 
 //pages
 import Home from "pages/home/Home";
+import ProductDetail from "pages/productDetail/ProductDetail";
 import NotFound from "pages/NotFound";
 
 export default function PrivateRouter() {
@@ -15,6 +16,7 @@ export default function PrivateRouter() {
       children: [
         ...generalRoutes,
         { element: <Home />, index: true },
+        { element: <ProductDetail />, path: "product-detail" },
         { path: "*", element: <NotFound /> },
       ],
     },

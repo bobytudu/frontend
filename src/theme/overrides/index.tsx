@@ -14,6 +14,7 @@ import { Shadows } from 'theme/customShadows'
 import { PaletteType } from 'theme/palette'
 import InputLabel from './InputLabel'
 import Dialog from "./Dialog";
+import Alert from "./Alert";
 
 // ----------------------------------------------------------------------
 
@@ -23,9 +24,9 @@ import Dialog from "./Dialog";
 // }
 
 export type ComponentsOverridesProps = Theme & {
-  customShadows: Shadows
-  palette: PaletteType
-}
+  customShadows: Shadows;
+  palette: PaletteType;
+};
 
 export default function ComponentsOverrides(theme: ComponentsOverridesProps) {
   return Object.assign(
@@ -40,6 +41,7 @@ export default function ComponentsOverrides(theme: ComponentsOverridesProps) {
     Autocomplete(theme),
     Tab(),
     InputLabel(theme),
-    Dialog(theme)
+    Dialog(theme),
+    Alert(theme)
   );
 }

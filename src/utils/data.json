@@ -1,0 +1,88 @@
+[
+  {
+    "title": "Television & Audio",
+    "children": [
+      {
+        "title": "Television",
+        "children": [
+          { "title": "LED Televisions" },
+          { "title": "OLED Televisions" },
+          { "title": "QLED Televisions" },
+          { "title": "UHD 4k Televisions" }
+        ]
+      },
+      {
+        "title": "Audio",
+        "children": [
+          { "title": "Soundbar", "icon": "mdi:soundbar" },
+          { "title": "BT Speaker", "icon": "material-symbols:speaker" },
+          { "title": "Home Theater" },
+          { "title": "Party Speaker" },
+          { "title": "Earbuds", "icon": "bi:earbuds" },
+          { "title": "Headphones", "icon": "noto-v1:headphone" },
+          { "title": "Earphones", "icon": "simple-line-icons:earphones" }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Kitchen Appliances",
+    "children": [
+      {
+        "title": "Kitchen Appliances",
+        "children": [
+          { "title": "Microwave Oven" },
+          { "title": "Electric Kettle" },
+          { "title": "Juicer Mixer Grinder" },
+          { "title": "Hand Blender" },
+          { "title": "Induction Cooktop" },
+          { "title": "Electric Cooker" },
+          { "title": "Air Fryer" },
+          { "title": "Coffee Maker" },
+          { "title": "Sandwich Maker" },
+          { "title": "Pop Up Toaster" },
+          { "title": "Electric Chimney" },
+          { "title": "Dishwasher" },
+          { "title": "Electric Grill" }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Personal Care",
+    "children": [
+      { "title": "Shaver" },
+      { "title": "Hair Dryer" },
+      { "title": "Hair Curler" },
+      { "title": "Trimmer" }
+    ]
+  },
+  {
+    "title": "Home Appliances",
+    "children": [
+      { "title": "Air Conditioner", "icon": "mingcute:air-condition-line" },
+      { "title": "Washing Machines", "icon": "openmoji:washing-machine" },
+      { "title": "Air Coolers", "icon": "game-icons:cooler" },
+      { "title": "Refrigerator", "icon": "solar:fridge-bold-duotone" },
+      { "title": "Vaccum Cleaners", "icon": "icon-park:vacuum-cleaner" },
+      { "title": "Irons", "icon": "icon-park-solid:iron-three" },
+      { "title": "Fans", "icon": "ph:fan-thin" }
+    ]
+  },
+  {
+    "title": "Accessories",
+    "children": [
+      { "title": "Smart Devices" },
+      { "title": "Stablizers" },
+      { "title": "Headphones" },
+      { "title": "Earphones" }
+    ]
+  },
+  {
+    "title": "Mobiles & Tablets",
+    "children": [
+      { "title": "Smart Phones" },
+      { "title": "Mobile & Tablet Accessories" }
+    ]
+  }
+]

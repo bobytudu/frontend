@@ -9,19 +9,13 @@ interface PageProps {
 
 export default function Page(props: PageProps) {
   return (
-    <div>
+    <div style={{ marginTop: 60 }}>
       <Helmet>
         <title>{props.title}</title>
-        <meta
-          name="description"
-          content={props.description}
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
+        <meta name="description" content={props.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Helmet>
       {props.children}
     </div>
-  )
+  );
 }
