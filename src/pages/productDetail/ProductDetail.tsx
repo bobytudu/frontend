@@ -53,13 +53,14 @@ const breadcrumbs = [
     Product
   </Typography>,
 ];
+const height = 60;
 const buttonStyle = {
   display: "block",
   border: "none",
   background: "rgba(0,0,0,0.3)",
   position: "absolute",
   top: "5%",
-  height: "100%",
+  height,
 };
 function SampleNextArrow(props: any) {
   const { style, onClick } = props;
@@ -161,8 +162,6 @@ export default function ProductDetail() {
     getImages();
   }, [dispatch]);
 
-  console.log(images);
-
   return (
     <Page title="Product Details">
       <Container maxWidth="xl" sx={{ p: 3 }}>
@@ -209,7 +208,7 @@ export default function ProductDetail() {
                 )}
               </Box>
               <Box
-                maxWidth={200}
+                maxWidth={260}
                 m="auto"
                 mt={2}
                 borderRadius={1}
@@ -219,29 +218,23 @@ export default function ProductDetail() {
                   "& .slick-list": {
                     // maxWidth: 50,
                   },
+                  "& .slick-track": {
+                    maxHeight: 60,
+                    mt: 0.5,
+                  },
                 }}
               >
                 <Slider {...settings}>
                   {images.map((image: any, index: number) => (
-                    <div
-                      key={index}
-                      style={{
-                        border: "1px solid red",
-                        background: "red",
-                        padding: 12,
-                        cursor: "pointer",
-                        paddingTop: 24,
-                      }}
-                      onClick={() => setActiveImage(index)}
-                    >
+                    <div key={index} onClick={() => setActiveImage(index)}>
                       <img
                         style={{
-                          width: 60,
+                          width: "95%",
                           height: 60,
                           objectFit: "cover",
-                          marginTop: 10,
+                          margin: "auto",
                         }}
-                        src={image.image}
+                        src={image.thumb}
                         alt={`slider-${index}`}
                       />
                     </div>

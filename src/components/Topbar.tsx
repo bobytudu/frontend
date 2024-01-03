@@ -280,22 +280,24 @@ function Topbar() {
         </ClickAwayListener>
 
         <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
-          <Tooltip title="Cart" arrow>
-            <IconButton sx={{ mr: 1 }}>
-              <Badge
-                badgeContent={4}
-                max={9}
-                sx={{
-                  "& .MuiBadge-badge": {
-                    bgcolor: "black",
-                    color: "white",
-                  },
-                }}
-              >
-                <ShoppingCartIcon sx={{ color: "white" }} />
-              </Badge>
-            </IconButton>
-          </Tooltip>
+          <Link to="product-detail">
+            <Tooltip title="Cart" arrow>
+              <IconButton sx={{ mr: 1 }}>
+                <Badge
+                  badgeContent={4}
+                  max={9}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      bgcolor: "black",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <ShoppingCartIcon sx={{ color: "white" }} />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+          </Link>
           <Tooltip title="Wishlist" arrow>
             <IconButton sx={{ mr: 1 }}>
               <Badge
