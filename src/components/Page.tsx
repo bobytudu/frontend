@@ -9,7 +9,7 @@ interface PageProps {
 
 export default function Page(props: PageProps) {
   return (
-    <div style={{ marginTop: 60 }}>
+    <div style={{ marginTop: 32 }}>
       <Helmet>
         <title>{props.title}</title>
         <meta name="description" content={props.description} />

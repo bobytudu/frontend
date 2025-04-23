@@ -18,7 +18,7 @@ export default function PrivateRouter() {
       children: [
         ...generalRoutes,
         { element: <Home />, index: true },
-        { element: <ProductDetail />, path: "product-detail" },
+        { element: <ProductDetail />, path: "product/:id" },
         { element: <SearchResults />, path: "search" },
         { element: <Test />, path: "test" },
         { path: "*", element: <NotFound /> },

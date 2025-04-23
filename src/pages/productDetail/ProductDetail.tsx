@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Page from "components/Page";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -8,92 +9,21 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Button from "@mui/material/Button";
-import Collapse from "@mui/material/Collapse";
 import InlineBox from "components/box/InlineBox";
 import IconButton from "@mui/material/IconButton";
-import SpecificationTable from "./SpecificationTable";
 import Slider, { Settings } from "react-slick";
+import productsData from "data/products.json";
 
-//icons
+// icons
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnOutlinedIcon from "@mui/icons-material/FlashOnOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import details from "./details.json";
 import { useAppDispatch } from "redux/hooks";
 import { openSnack } from "redux/reducers/snack.reducer";
-import axios from "axios";
-
-const breadcrumbs = [
-  <Typography
-    variant="subtitle2"
-    component={Link}
-    key="1"
-    color="inherit"
-    to="/"
-  >
-    Home
-  </Typography>,
-  <Typography
-    variant="subtitle2"
-    component={Link}
-    key="2"
-    to="/category"
-    color="inherit"
-  >
-    Category
-  </Typography>,
-  <Typography variant="subtitle2" key="3" color="text.primary">
-    Product
-  </Typography>,
-];
-const height = 60;
-const buttonStyle = {
-  display: "block",
-  border: "none",
-  background: "rgba(0,0,0,0.3)",
-  position: "absolute",
-  top: "5%",
-  height,
-};
-function SampleNextArrow(props: any) {
-  const { style, onClick } = props;
-  return (
-    <button
-      // className={className}
-      style={{
-        ...style,
-        ...buttonStyle,
-        right: -40,
-      }}
-      onClick={onClick}
-    >
-      <ChevronRightIcon />
-    </button>
-  );
-}
-function SamplePrevArrow(props: any) {
-  const { style, onClick } = props;
-  return (
-    <button
-      // className={className}
-      style={{
-        ...style,
-        ...buttonStyle,
-        left: -40,
-      }}
-      onClick={onClick}
-    >
-      <ChevronLeftIcon />
-    </button>
-  );
-}
 
 const settings: Settings = {
   dots: false,
@@ -102,69 +32,64 @@ const settings: Settings = {
   slidesToShow: 3,
   slidesToScroll: 1,
   arrows: true,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
 };
 
 export default function ProductDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isFavorite, setIsFavorite] = React.useState(false);
-  const [showDescription, setShowDescription] = React.useState(true);
-  const [images, setImages] = React.useState<
-    { image: string; thumb: string }[]
-  >([]);
-  const [activeImage, setActiveImage] = React.useState(0);
+
+  // Find the product from products.json
+  const product = productsData.products.find((p) => p.id === id);
+
+  // Redirect to 404 if product not found
+  React.useEffect(() => {
+    if (!product) {
+      navigate("/404");
+    }
+  }, [product, navigate]);
+
+  if (!product) return null;
+
+  const breadcrumbs = [
+    <Typography
+      variant="subtitle2"
+      component={Link}
+      key="1"
+      color="inherit"
+      to="/"
+    >
+      Home
+    </Typography>,
+    <Typography
+      variant="subtitle2"
+      component={Link}
+      key="2"
+      to="/category"
+      color="inherit"
+    >
+      {product.category}
+    </Typography>,
+    <Typography variant="subtitle2" key="3" color="text.primary">
+      {product.name}
+    </Typography>,
+  ];
 
   function toggleFavorite() {
     setIsFavorite(!isFavorite);
-    if (isFavorite) {
-      dispatch(
-        openSnack({
-          open: true,
-          message: "Removed from favorites",
-          severity: "warning",
-        })
-      );
-    } else {
-      dispatch(
-        openSnack({
-          open: true,
-          message: "Added to favorites",
-          severity: "success",
-        })
-      );
-    }
+    dispatch(
+      openSnack({
+        open: true,
+        message: isFavorite ? "Removed from favorites" : "Added to favorites",
+        severity: isFavorite ? "warning" : "success",
+      })
+    );
   }
 
-  React.useEffect(() => {
-    async function getImages() {
-      try {
-        const { data } = await axios.get(
-          "https://api.unsplash.com/photos?per_page=10&page=1",
-          {
-            headers: {
-              Authorization:
-                "Client-ID tow9Mcd6eoN80DKASB2jdRXItfbOe46fiRuCHoLWogo",
-            },
-          }
-        );
-        const tempData = data.map((item: any) => ({
-          image: item.urls.raw,
-          thumb: item.urls.thumb,
-        }));
-        setImages(tempData);
-      } catch (error: any) {
-        dispatch(
-          openSnack({ open: true, message: error.message, severity: "error" })
-        );
-      }
-    }
-    getImages();
-  }, [dispatch]);
-
   return (
-    <Page title="Product Details">
-      <Container maxWidth="xl" sx={{ p: 3 }}>
+    <Page title={product.name}>
+      <Container maxWidth="xl">
         <Grid container spacing={3}>
           <Grid
             item
@@ -193,53 +118,17 @@ export default function ProductDetail() {
                     <FavoriteBorderOutlinedIcon />
                   )}
                 </IconButton>
-                {images.length > 0 && (
-                  <img
-                    style={{
-                      width: "100%",
-                      maxHeight: 300,
-                      minHeight: 300,
-                      objectFit: "cover",
-                      borderRadius: 8,
-                    }}
-                    src={images[activeImage].image}
-                    alt={`slider-${activeImage}`}
-                  />
-                )}
-              </Box>
-              <Box
-                maxWidth={260}
-                m="auto"
-                mt={2}
-                borderRadius={1}
-                // border="1px solid rgba(0,0,0,0.1)"
-                maxHeight={200}
-                sx={{
-                  "& .slick-list": {
-                    // maxWidth: 50,
-                  },
-                  "& .slick-track": {
-                    maxHeight: 60,
-                    mt: 0.5,
-                  },
-                }}
-              >
-                <Slider {...settings}>
-                  {images.map((image: any, index: number) => (
-                    <div key={index} onClick={() => setActiveImage(index)}>
-                      <img
-                        style={{
-                          width: "95%",
-                          height: 60,
-                          objectFit: "cover",
-                          margin: "auto",
-                        }}
-                        src={image.thumb}
-                        alt={`slider-${index}`}
-                      />
-                    </div>
-                  ))}
-                </Slider>
+                <img
+                  style={{
+                    width: "100%",
+                    maxHeight: 300,
+                    minHeight: 300,
+                    objectFit: "cover",
+                    borderRadius: 8,
+                  }}
+                  src={product.image}
+                  alt={product.name}
+                />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -293,71 +182,60 @@ export default function ProductDetail() {
               component="h1"
               gutterBottom
             >
-              {details.title}
+              {product.name}
             </Typography>
             <InlineBox>
               <Typography variant="h6" sx={{ fontWeight: 600 }} gutterBottom>
-                ₹{details.price}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  fontWeight: 400,
-                  textDecoration: "line-through",
-                  mx: 1,
-                  opacity: 0.6,
-                }}
-                gutterBottom
-              >
-                ₹{details.mrp}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: 400, color: "green" }}
-                gutterBottom
-              >
-                {details.discount}% off
+                ₹{product.price.toLocaleString()}
               </Typography>
             </InlineBox>
             <InlineBox>
               <Chip
                 size="small"
                 sx={{ borderRadius: "4px", bgcolor: "green", color: "white" }}
-                label="5"
+                label={product.rating}
                 icon={<StarOutlinedIcon color="inherit" />}
               />
               <Typography variant="body2" sx={{ ml: 1 }}>
-                {details.ratings.length} Ratings & {details.reviews.length}{" "}
-                Reviews
+                {product.reviews} Reviews
               </Typography>
             </InlineBox>
-            <Box borderRadius={1} border="1px solid rgba(0,0,0,0.1)" my={2}>
-              <InlineBox justifyContent="space-between" p={1} px={2}>
-                <Typography variant="h6">Description</Typography>
-                <IconButton
-                  onClick={() => setShowDescription(!showDescription)}
-                >
-                  <ExpandMoreIcon
-                    sx={{
-                      transform: showDescription
-                        ? "rotate(180deg)"
-                        : "rotate(0deg)",
-                    }}
-                  />
-                </IconButton>
-              </InlineBox>
-              <Collapse in={showDescription}>
-                <Box p={2} borderTop="1px solid rgba(0,0,0,0.1)">
-                  <Typography
-                    variant="body2"
-                    sx={{ opacity: 0.8, textAlign: "justify" }}
-                  >
-                    {details.description}
-                  </Typography>
-                </Box>
-              </Collapse>
+            <Box
+              borderRadius={1}
+              border="1px solid rgba(0,0,0,0.1)"
+              my={2}
+              p={2}
+            >
+              <Typography variant="h6" gutterBottom>
+                Description
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {product.description}
+              </Typography>
             </Box>
-            <SpecificationTable data={details.specifications} />
+            <Box
+              borderRadius={1}
+              border="1px solid rgba(0,0,0,0.1)"
+              my={2}
+              p={2}
+            >
+              <Typography variant="h6" gutterBottom>
+                Specifications
+              </Typography>
+              <Typography variant="body2" component="div">
+                <Box component="ul" sx={{ pl: 2 }}>
+                  <Box component="li" sx={{ mb: 1 }}>
+                    Brand: {product.brand}
+                  </Box>
+                  <Box component="li" sx={{ mb: 1 }}>
+                    Category: {product.category}
+                  </Box>
+                  <Box component="li" sx={{ mb: 1 }}>
+                    Sub-Category: {product.subCategory}
+                  </Box>
+                </Box>
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Container>

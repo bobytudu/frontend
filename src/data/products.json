@@ -34,7 +34,7 @@
       "category": "Laptops",
       "subCategory": "Gaming Laptops",
       "brand": "Asus",
-      "image": "/images/laptop-1.jpg",
+      "image": "https://picsum.photos/300/200",
       "rating": 4.7,
       "reviews": 89,
       "inStock": true
@@ -47,7 +47,7 @@
       "category": "Smartphones",
       "subCategory": "Android Phones",
       "brand": "Samsung",
-      "image": "/images/phone-1.jpg",
+      "image": "https://picsum.photos/300/200",
       "rating": 4.6,
       "reviews": 356,
       "inStock": true
