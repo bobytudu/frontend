@@ -1,44 +1,45 @@
-import PropTypes from 'prop-types'
-import { useMemo } from 'react'
+import React, { useMemo } from "react";
 // @mui
-import { CssBaseline } from '@mui/material'
-import { ThemeProvider as MUIThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles'
+import { CssBaseline } from "@mui/material";
+import {
+  ThemeProvider as MUIThemeProvider,
+  createTheme,
+  StyledEngineProvider,
+} from "@mui/material/styles";
 //
-import palette, { PaletteType } from './palette'
-import shadows from './shadows'
-import typography from './typography'
-import GlobalStyles from './globalStyles'
-import customShadows from './customShadows'
-import componentsOverride, { ComponentsOverridesProps } from './overrides'
-
-// ----------------------------------------------------------------------
-
-ThemeProvider.propTypes = {
-  children: PropTypes.node
-}
+import palette, { PaletteType } from "./palette";
+import shadows from "./shadows";
+import typography from "./typography";
+import GlobalStyles from "./globalStyles";
+import customShadows from "./customShadows";
+import componentsOverride, { ComponentsOverridesProps } from "./overrides";
 
 interface ThemeOptionTypes {
-  palette: PaletteType
-  shape: { borderRadius: number }
-  typography: any
-  shadows: any
-  customShadows: any
+  palette: PaletteType;
+  shape: { borderRadius: number };
+  typography: any;
+  shadows: any;
+  customShadows: any;
 }
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
+export default function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const themeOptions: ThemeOptionTypes = useMemo(
     () => ({
       palette,
       shape: { borderRadius: 6 },
       typography,
       shadows: shadows(),
-      customShadows: customShadows()
+      customShadows: customShadows(),
     }),
     []
-  )
+  );
 
-  const theme = createTheme(themeOptions)
-  theme.components = componentsOverride(theme as ComponentsOverridesProps)
+  const theme = createTheme(themeOptions);
+  theme.components = componentsOverride(theme as ComponentsOverridesProps);
 
   return (
     <StyledEngineProvider injectFirst>
@@ -48,5 +49,5 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
         {children}
       </MUIThemeProvider>
     </StyledEngineProvider>
-  )
+  );
 }

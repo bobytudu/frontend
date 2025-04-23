@@ -1,0 +1,56 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "LED Smart TV 55-inch",
+      "description": "4K Ultra HD Smart LED TV with HDR",
+      "price": 45999,
+      "category": "Television",
+      "subCategory": "LED Televisions",
+      "brand": "Samsung",
+      "image": "https://picsum.photos/300/200",
+      "rating": 4.5,
+      "reviews": 128,
+      "inStock": true
+    },
+    {
+      "id": "2",
+      "name": "Wireless Earbuds Pro",
+      "description": "True Wireless Earbuds with Active Noise Cancellation",
+      "price": 24999,
+      "category": "Audio",
+      "subCategory": "Earbuds",
+      "brand": "Sony",
+      "image": "https://picsum.photos/300/200",
+      "rating": 4.3,
+      "reviews": 245,
+      "inStock": true
+    },
+    {
+      "id": "3",
+      "name": "Gaming Laptop Pro",
+      "description": "15.6-inch Gaming Laptop with RTX 3060",
+      "price": 89999,
+      "category": "Laptops",
+      "subCategory": "Gaming Laptops",
+      "brand": "Asus",
+      "image": "/images/laptop-1.jpg",
+      "rating": 4.7,
+      "reviews": 89,
+      "inStock": true
+    },
+    {
+      "id": "4",
+      "name": "Smartphone Ultra",
+      "description": "6.7-inch Smartphone with 108MP Camera",
+      "price": 79999,
+      "category": "Smartphones",
+      "subCategory": "Android Phones",
+      "brand": "Samsung",
+      "image": "/images/phone-1.jpg",
+      "rating": 4.6,
+      "reviews": 356,
+      "inStock": true
+    }
+  ]
+}

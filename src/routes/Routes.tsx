@@ -9,6 +9,7 @@ import { setUser, stopLoading } from "redux/reducers/auth.reducer";
 import AlertComp from "components/Alert";
 import { closeSnack } from "redux/reducers/snack.reducer";
 // import Loader from "components/Loader";
+import SearchResults from 'pages/SearchResults';
 
 export default function Routes() {
   const dispatch = useDispatch();

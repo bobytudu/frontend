@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Paper from "@mui/material/Paper";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -17,21 +16,18 @@ import Badge from "@mui/material/Badge";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Collapse from "@mui/material/Collapse";
-import OutlinedInput from "@mui/material/OutlinedInput";
 
 //icons
 import { Icon } from "@iconify/react";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "redux/reducers/auth.reducer";
 import { signOut } from "firebase/auth";
 import { firebaseAuth } from "services/firebase";
@@ -40,6 +36,7 @@ import data from "utils/data.json";
 
 import logoImg from "assets/logo_1.png";
 import { openSnack } from "redux/reducers/snack.reducer";
+import SearchInput from "./search/SearchInput";
 
 const pages = ["Home", "Projects", "Images", "Assets"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -93,20 +90,20 @@ function CustomList() {
 }
 
 function Topbar() {
+  const navigate = useNavigate();
   const {
     auth: { user },
   } = useAppSelector((state) => ({
     auth: state.auth,
   }));
   const dispatch = useAppDispatch();
-  const [searchResult, setSearchResult] = React.useState<any[]>([]);
-  const [showResult, setShowResult] = React.useState<boolean>(false);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [searchInput, setSearchInput] = React.useState("");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -132,8 +129,6 @@ function Topbar() {
     }
   };
 
-  const width = 500;
-
   return (
     <AppBar
       position="fixed"
@@ -142,6 +137,7 @@ function Topbar() {
         bgcolor: "primary.main",
         borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
         px: 4,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Drawer
@@ -170,7 +166,6 @@ function Topbar() {
         <CustomList />
       </Drawer>
       <Toolbar disableGutters>
-        {/* <Box sx={{ display: { xs: "flex", md: "none" } }}> */}
         <Box sx={{ display: "flex" }}>
           <IconButton
             size="large"
@@ -226,58 +221,7 @@ function Topbar() {
             />
           </Link>
         </Box>
-        <ClickAwayListener onClickAway={() => setShowResult(false)}>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              ml: 2,
-              flexGrow: 1,
-              position: "relative",
-            }}
-          >
-            <OutlinedInput
-              onFocus={() => setShowResult(true)}
-              sx={{
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                width,
-                transition: "width 0.5s",
-                bgcolor: "background.color-background-grey",
-                maxHeight: 38,
-                borderRadius: 1,
-              }}
-              startAdornment={
-                <SearchIcon sx={{ color: "text.color-text-clickable" }} />
-              }
-              placeholder="Search"
-            />
-            <List
-              dense
-              className="search-result"
-              sx={{
-                position: "absolute",
-                top: 40,
-                width,
-                display: showResult ? "block" : "none",
-                border: "1px solid rgba(0, 0, 0, 0.1)",
-                boxShadow:
-                  "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
-              }}
-              component={Paper}
-            >
-              <ListItemButton>
-                <ListItemText primary="Result 1" secondary="category" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Result 2" secondary="category" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Result 3" secondary="category" />
-              </ListItemButton>
-            </List>
-          </Box>
-        </ClickAwayListener>
+        <SearchInput />
 
         <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
           <Link to="product-detail">

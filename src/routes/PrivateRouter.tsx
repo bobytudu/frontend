@@ -7,6 +7,8 @@ import generalRoutes from "./generalRoutes";
 import Home from "pages/home/Home";
 import ProductDetail from "pages/productDetail/ProductDetail";
 import NotFound from "pages/NotFound";
+import Test from "pages/Test";
+import SearchResults from "pages/SearchResults";
 
 export default function PrivateRouter() {
   const routes = useRoutes([
@@ -17,6 +19,8 @@ export default function PrivateRouter() {
         ...generalRoutes,
         { element: <Home />, index: true },
         { element: <ProductDetail />, path: "product-detail" },
+        { element: <SearchResults />, path: "search" },
+        { element: <Test />, path: "test" },
         { path: "*", element: <NotFound /> },
       ],
     },
