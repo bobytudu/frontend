@@ -9,6 +9,9 @@ import ProductDetail from "pages/productDetail/ProductDetail";
 import NotFound from "pages/NotFound";
 import Test from "pages/Test";
 import SearchResults from "pages/SearchResults";
+import Cart from "pages/cart/Cart";
+import Checkout from "pages/checkout/Checkout";
+import OrderConfirmation from "pages/checkout/OrderConfirmation";
 
 export default function PrivateRouter() {
   const routes = useRoutes([
@@ -20,6 +23,9 @@ export default function PrivateRouter() {
         { element: <Home />, index: true },
         { element: <ProductDetail />, path: "product/:id" },
         { element: <SearchResults />, path: "search" },
+        { element: <Cart />, path: "cart" },
+        { element: <Checkout />, path: "checkout" },
+        { element: <OrderConfirmation />, path: "order-confirmation" },
         { element: <Test />, path: "test" },
         { path: "*", element: <NotFound /> },
       ],

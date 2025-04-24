@@ -93,8 +93,10 @@ function Topbar() {
   const navigate = useNavigate();
   const {
     auth: { user },
+    cart: { items: cartItems },
   } = useAppSelector((state) => ({
     auth: state.auth,
+    cart: state.cart,
   }));
   const dispatch = useAppDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -224,11 +226,11 @@ function Topbar() {
         <SearchInput />
 
         <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
-          <Link to="product-detail">
+          <Link to="cart">
             <Tooltip title="Cart" arrow>
               <IconButton sx={{ mr: 1 }}>
                 <Badge
-                  badgeContent={4}
+                  badgeContent={cartItems.length}
                   max={9}
                   sx={{
                     "& .MuiBadge-badge": {

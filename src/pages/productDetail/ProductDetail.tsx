@@ -24,6 +24,7 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 
 import { useAppDispatch } from "redux/hooks";
 import { openSnack } from "redux/reducers/snack.reducer";
+import { addToCart } from 'redux/reducers/cart.reducer';
 
 const settings: Settings = {
   dots: false,
@@ -87,6 +88,40 @@ export default function ProductDetail() {
     );
   }
 
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        brand: product.brand,
+      })
+    );
+    dispatch(
+      openSnack({
+        open: true,
+        message: "Added to cart",
+        severity: "success",
+      })
+    );
+  };
+
+  const handleBuyNow = () => {
+    // First add to cart
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        brand: product.brand,
+      })
+    );
+    // Then navigate to checkout
+    navigate('/checkout');
+  };
+
   return (
     <Page title={product.name}>
       <Container maxWidth="xl">
@@ -141,15 +176,7 @@ export default function ProductDetail() {
                 }}
                 fullWidth
                 startIcon={<ShoppingCartIcon />}
-                onClick={() =>
-                  dispatch(
-                    openSnack({
-                      open: true,
-                      message: "Added to cart",
-                      severity: "success",
-                    })
-                  )
-                }
+                onClick={handleAddToCart}
               >
                 ADD TO CART
               </Button>
@@ -164,6 +191,7 @@ export default function ProductDetail() {
                 }}
                 fullWidth
                 startIcon={<FlashOnOutlinedIcon />}
+                onClick={handleBuyNow}
               >
                 BUY NOW
               </Button>
