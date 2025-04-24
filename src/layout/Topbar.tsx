@@ -39,7 +39,14 @@ import { openSnack } from "redux/reducers/snack.reducer";
 import SearchInput from "./search/SearchInput";
 
 const pages = ["Home", "Projects", "Images", "Assets"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const accountMenu = [
+  { label: "Profile", path: "/account/profile" },
+  { label: "Orders", path: "/account/orders" },
+  { label: "Addresses", path: "/account/addresses" },
+  { label: "Payment Methods", path: "/account/payment-methods" },
+  { label: "Wishlist", path: "/account/wishlist" },
+  { label: "Logout", path: null }, // Special case for logout
+];
 
 function CustomList() {
   const [open, setOpen] = React.useState<number | null>(null);
@@ -118,13 +125,15 @@ function Topbar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = async (type?: string) => {
+  const handleCloseUserMenu = async (path: string | null) => {
     try {
       setAnchorElUser(null);
-      if (type === "Logout") {
+      if (path === null) { // Logout case
         await signOut(firebaseAuth);
         localStorage.clear();
         dispatch(logout());
+      } else {
+        navigate(path);
       }
     } catch (error: any) {
       dispatch(openSnack({ message: error.message, type: "error" }));
@@ -283,14 +292,14 @@ function Topbar() {
               horizontal: "right",
             }}
             open={Boolean(anchorElUser)}
-            onClose={() => handleCloseUserMenu()}
+            onClose={() => handleCloseUserMenu(null)}
           >
-            {settings.map((setting) => (
+            {accountMenu.map((item) => (
               <MenuItem
-                key={setting}
-                onClick={() => handleCloseUserMenu(setting)}
+                key={item.label}
+                onClick={() => handleCloseUserMenu(item.path)}
               >
-                <Typography textAlign="center">{setting}</Typography>
+                <Typography textAlign="center">{item.label}</Typography>
               </MenuItem>
             ))}
           </Menu>
